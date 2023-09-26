@@ -2,8 +2,8 @@ import Layout from "../components/layout";
 import { useState } from "react";
 import { store } from "../store/store";
 import { useNavigate } from "react-router-dom";
-import { setToken } from "../store/store";
 import { useDispatch } from "react-redux";
+import { fetchLogin, fetchUserData } from "../utils/api";
 
 function Connexion() {
   const navigate = useNavigate();
@@ -13,33 +13,9 @@ function Connexion() {
   const [response, setResponse] = useState(""); // Add this line
 
   const url = "http://localhost:3001/api/v1/user/login"; // a mettre dans une variable globale
-  const fetchData = async (event) => {
+  const handleFetchData = async (event) => {
     event.preventDefault();
-    const data = { email, password };
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    };
-    try {
-      const response = await fetch(url, options);
-      const responseData = await response.json();
-      setResponse(response); // Add this line
-
-      if (response.ok) {
-        let token = responseData.body.token;
-        dispatch(setToken(token));
-        navigate("/profile");
-      } else {
-        console.log("error");
-      }
-      console.log(response);
-      console.log(email, password);
-    } catch (error) {
-      console.log(error);
-    }
+    await fetchLogin(url, email, password, setResponse, dispatch, navigate); // Call the fetchData function
   };
 
   return (
@@ -48,7 +24,7 @@ function Connexion() {
         <section className="sign-in-content">
           <i className="fa fa-user-circle sign-in-icon"></i>
           <h1>Sign In</h1>
-          <form onSubmit={fetchData}>
+          <form onSubmit={handleFetchData}> 
             <div className="input-wrapper">
               <label htmlFor="username">Username</label>
               <input

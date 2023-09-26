@@ -6,35 +6,7 @@ import { setUser } from "../store/store";
 import { useSelector } from "react-redux";
 
 function User() {
-  const dispatch = useDispatch();
-  const token = useSelector((state) => state.token.token);
-  const url = `${apiURL}/profile`;
   let user = useSelector((state) => state.user);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            accept: "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({}),
-        });
-
-        const responseData = await response.json();
-        console.log(responseData);
-        const { firstName, lastName, userName, id } = responseData.body;
-        user = { firstName, lastName, userName, id };
-        dispatch(setUser(user));
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
-  }, [dispatch]);
 
   return (
     <Layout>
