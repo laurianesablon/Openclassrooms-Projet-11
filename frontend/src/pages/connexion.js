@@ -1,9 +1,8 @@
 import Layout from "../components/layout";
 import { useState } from "react";
-import { store } from "../store/store";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { fetchLogin, fetchUserData } from "../utils/api";
+import { fetchLogin } from "../utils/api";
 
 function Connexion() {
   const navigate = useNavigate();
@@ -12,10 +11,9 @@ function Connexion() {
   const [password, setPassword] = useState("");
   const [response, setResponse] = useState(""); // Add this line
 
-  const url = "http://localhost:3001/api/v1/user/login"; // a mettre dans une variable globale
   const handleFetchData = async (event) => {
     event.preventDefault();
-    await fetchLogin(url, email, password, setResponse, dispatch, navigate); // Call the fetchData function
+    await fetchLogin( email, password, setResponse, dispatch, navigate); // Call the fetchData function
   };
 
   return (
