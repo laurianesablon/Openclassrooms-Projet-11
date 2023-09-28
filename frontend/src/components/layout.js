@@ -1,7 +1,14 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/img/argentBankLogo.png";
+import { useDispatch, useSelector } from "react-redux";
+import { clearToken } from "../store/store";
 
 function Header() {
+  const authenticated = useSelector((state) => state.token.authenticated);
+  const dispatch = useDispatch()
+  function handleLogout() {
+    dispatch(clearToken())
+  }
   return (
     <header>
       <nav className="main-nav">
@@ -14,10 +21,18 @@ function Header() {
           <h1 className="sr-only">Argent Bank</h1>
         </Link>
         <div>
-          <Link className="main-nav-item" to="/login">
-            <i className="fa fa-user-circle"></i>
-            Sign In
-          </Link>
+        {authenticated ? (
+            <p className="main-nav-item" onClick={handleLogout}> 
+
+              <i className="fa fa-user-circle"></i>
+              Log Out
+            </p>
+          ) : (
+            <Link className="main-nav-item" to="/login">
+              <i className="fa fa-user-circle"></i>
+              Sign In
+            </Link>
+          )}
         </div>
       </nav>
     </header>
