@@ -46,7 +46,6 @@ export const fetchUserData = async (token, dispatch) => {
       },
       body: JSON.stringify({}),
     });
-    console.log(response);
 
     if (response.ok) {
       const responseData = await response.json();
@@ -64,24 +63,31 @@ export const fetchUserData = async (token, dispatch) => {
   }
 };
 
-export const changeUsername = async (newUsername, token, dispatch, firstName, lastName, id) => {
-    try {
-      const response = await fetch(`${apiURL}/profile`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "accept": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify({ newUsername }),
-      });
-  
-      if (response.ok) {
-        dispatch(setUser({ firstName, lastName, userName: newUsername, id }));
-      } else {
-        throw new Error(response.statusText);
-      }
-    } catch (error) {
-      throw new Error(error);
+export const changeUsername = async (
+  newUsername,
+  token,
+  dispatch,
+  firstName,
+  lastName,
+  id
+) => {
+  try {
+    const response = await fetch(`${apiURL}/profile`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ newUsername }),
+    });
+
+    if (response.ok) {
+      dispatch(setUser({ firstName, lastName, userName: newUsername, id }));
+    } else {
+      throw new Error(response.statusText);
     }
-  };
+  } catch (error) {
+    throw new Error(error);
+  }
+};
