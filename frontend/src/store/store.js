@@ -1,5 +1,4 @@
 import { combineReducers, configureStore, createSlice } from "@reduxjs/toolkit";
-
 const tokenSlice = createSlice({
   name: 'token',
   initialState: {
@@ -24,23 +23,20 @@ const userSlice = createSlice({
     firstName: undefined,
     lastName: undefined,
     userName: undefined,
-    id: undefined,
-    authenticated: false, // Add this property if it's needed
+    authenticated: false, 
   },
   reducers: {
     setUser: (state, action) => {
-      const { firstName, lastName, userName, id } = action.payload;
+      const { firstName, lastName, userName} = action.payload;
       state.firstName = firstName;
       state.lastName = lastName;
       state.userName = userName;
-      state.id = id;
       state.authenticated = true;
     },
     clearUser: (state) => {
       state.firstName = undefined;
       state.lastName = undefined;
       state.userName = undefined;
-      state.id = undefined;
       state.authenticated = false;
     },
   },
