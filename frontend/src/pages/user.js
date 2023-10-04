@@ -1,13 +1,26 @@
-import { useEffect } from "react";
 import Layout from "../components/layout";
-import { apiURL } from "../utils/apiURL";
 import { useDispatch } from "react-redux";
-import { setUser } from "../store/store";
 import { useSelector } from "react-redux";
-
+import { useState } from "react";
+import { changeUsername } from "../utils/api";
+import ChangeUsernameModal from "../components/changeUserNameModal";
+import Account from "../components/account";
 function User() {
-  let user = useSelector((state) => state.user);
-
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  const token = useSelector((state) => state.token.token);
+  const userName = user.userName;
+  const [toggle, setToggle] = useState(false);
+  const handleChangedUserName = (newUsername) => {
+    changeUsername(
+      newUsername,
+      token,
+      dispatch,
+      user.firstName,
+      user.lastName,
+    );
+    setToggle(!toggle);
+  };
   return (
     <Layout>
       <main className="main bg-dark">
@@ -15,63 +28,39 @@ function User() {
           <h1>
             Welcome back
             <br />
-            {user.firstName} {user.lastName}!
+            {userName ? userName : `${user.firstName} ${user.lastName}`}!
           </h1>
-          <button className="edit-button">Edit Name</button>
-          <label>
-            User name:
-            <input type="text" id="username"></input>
-          </label>
-          <label>
-            First name:{" "}
-            <input
-              type="text"
-              id="firstName"
-              value={user.firstName}
-              disabled
-            ></input>
-          </label>
-          <label>
-            Last name:{" "}
-            <input
-              type="text"
-              id="lastName"
-              value={user.lastName}
-              disabled
-            ></input>{" "}
-          </label>
+          {!toggle && (
+            <button className="edit-button" onClick={() => setToggle(!toggle)}>
+              Edit Name
+            </button>
+          )}
+          {toggle && (
+            <ChangeUsernameModal
+              user={user}
+              userName={userName}
+              handleChangedUserName={handleChangedUserName}
+              setToggle={setToggle}
+              toggle={toggle}
+            />
+          )}
         </div>
         <h2 className="sr-only">Accounts</h2>
-        <section className="account">
-          <div className="account-content-wrapper">
-            <h3 className="account-title">Argent Bank Checking (x8349)</h3>
-            <p className="account-amount">$2,082.79</p>
-            <p className="account-amount-description">Available Balance</p>
-          </div>
-          <div className="account-content-wrapper cta">
-            <button className="transaction-button">View transactions</button>
-          </div>
-        </section>
-        <section className="account">
-          <div className="account-content-wrapper">
-            <h3 className="account-title">Argent Bank Savings (x6712)</h3>
-            <p className="account-amount">$10,928.42</p>
-            <p className="account-amount-description">Available Balance</p>
-          </div>
-          <div className="account-content-wrapper cta">
-            <button className="transaction-button">View transactions</button>
-          </div>
-        </section>
-        <section className="account">
-          <div className="account-content-wrapper">
-            <h3 className="account-title">Argent Bank Credit Card (x8349)</h3>
-            <p className="account-amount">$184.30</p>
-            <p className="account-amount-description">Current Balance</p>
-          </div>
-          <div className="account-content-wrapper cta">
-            <button className="transaction-button">View transactions</button>
-          </div>
-        </section>
+        <Account
+          accountTitle="Argent Bank Checking"
+          accountAmount="$2,082.79"
+          accountAmountDescription="Available Balance"
+        />
+        <Account
+          accountTitle="Argent Bank Savings"
+          accountAmount="$10,928.42"
+          accountAmountDescription="Available Balance"
+        />
+        <Account
+          accountTitle="Argent Bank Credit Card (x8349)"
+          accountAmount="$184.30"
+          accountAmountDescription="Current Balance"
+        />
       </main>
     </Layout>
   );
