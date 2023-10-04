@@ -21,18 +21,19 @@ function Header() {
           <h1 className="sr-only">Argent Bank</h1>
         </Link>
         <div>
-        {authenticated ? (
+        {authenticated && (
             <p className="main-nav-item" onClick={handleLogout}> 
 
               <i className="fa fa-user-circle"></i>
               Log Out
             </p>
-          ) : (
-            <Link className="main-nav-item" to="/login">
-              <i className="fa fa-user-circle"></i>
-              Sign In
-            </Link>
-          )}
+           )}
+           {!authenticated && (
+             <Link className="main-nav-item" to="/login">
+             <i className="fa fa-user-circle"></i>
+             Sign In
+           </Link>
+           )}
         </div>
       </nav>
     </header>
