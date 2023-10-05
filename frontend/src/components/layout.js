@@ -22,11 +22,11 @@ function Header() {
         </Link>
         <div>
         {authenticated && (
-            <p className="main-nav-item" onClick={handleLogout}> 
+            <Link className="main-nav-item" onClick={handleLogout} to="/"> 
 
               <i className="fa fa-user-circle"></i>
               Log Out
-            </p>
+            </Link>
            )}
            {!authenticated && (
              <Link className="main-nav-item" to="/login">
