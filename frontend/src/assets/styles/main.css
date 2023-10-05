@@ -357,3 +357,21 @@ button.cancel {
     width: 200px;
   }
 }
+
+.error_message {
+  position: absolute;
+  border-radius: 8px;
+  right: 10px;
+  bottom: 100px;
+  background-color: #ebebeb;
+  height: 50px;
+  width: 300px;
+}
+
+.fa-circle-exclamation{
+  color: red;
+  position: absolute;
+  left: 10px;
+  top: 13px;
+  font-size: 25px;
+}

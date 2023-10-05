@@ -1,12 +1,14 @@
-import { setToken, setUser } from "../store/store";
+import { clearMessage, setMessage, setToken, setUser } from "../store/store";
 import { apiURL } from "./apiURL";
+import { clearErrorMessage } from "./clearErrorMessage";
 
 export const fetchLogin = async (
   email,
   password,
   setResponse,
   dispatch,
-  navigate
+  navigate,
+  message
 ) => {
   try {
     const data = { email, password };
@@ -26,8 +28,10 @@ export const fetchLogin = async (
       const token = responseData.body.token;
       await fetchUserData(token, dispatch);
       dispatch(setToken(token));
+      clearErrorMessage(dispatch, message);
       navigate("/profile");
     } else {
+      dispatch(setMessage(responseData.message));
       throw new Error(responseData.message);
     }
   } catch (Error) {
@@ -69,7 +73,8 @@ export const changeUsername = async (
   dispatch,
   firstName,
   lastName,
-  id
+  id,
+  message
 ) => {
   try {
     const response = await fetch(`${apiURL}/profile`, {
@@ -84,8 +89,12 @@ export const changeUsername = async (
 
     if (response.ok) {
       dispatch(setUser({ firstName, lastName, userName: newUsername, id }));
+      clearErrorMessage(dispatch, message);
+
     } else {
+      dispatch(setMessage(response.statusText));
       throw new Error(response.statusText);
+
     }
   } catch (error) {
     throw new Error(error);

@@ -5,12 +5,16 @@ import { useState } from "react";
 import { changeUsername } from "../utils/api";
 import ChangeUsernameModal from "../components/changeUserNameModal";
 import Account from "../components/account";
+import { ErrorMessage } from "../components/error_message";
 function User() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const token = useSelector((state) => state.token.token);
   const userName = user.userName;
   const [toggle, setToggle] = useState(false);
+  const message = useSelector((state) => state.errorMessage.message);
+  // console.log(message);
+
   const handleChangedUserName = (newUsername) => {
     changeUsername(
       newUsername,
@@ -42,6 +46,7 @@ function User() {
               handleChangedUserName={handleChangedUserName}
               setToggle={setToggle}
               toggle={toggle}
+              message={message}
             />
           )}
         </div>
@@ -62,6 +67,9 @@ function User() {
           accountAmountDescription="Current Balance"
         />
       </main>
+      {message && (
+          <ErrorMessage message={message}/>
+        )}
     </Layout>
   );
 }

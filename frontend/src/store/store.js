@@ -42,16 +42,34 @@ const userSlice = createSlice({
   },
 });
 
+const errorMessageSlice = createSlice({
+  name: 'errorMessage',
+  initialState: {
+    message: undefined,
+  },
+  reducers: {
+    setMessage: (state, action) => {
+      state.message = action.payload;
+    },
+    clearMessage: (state) => {
+      state.message = undefined;
+    }
+  },
+})
+
 
 const tokenReducer = tokenSlice.reducer;
 const userReducer = userSlice.reducer;
+const errorMessageReducer = errorMessageSlice.reducer;
 
 export const { setToken, clearToken } = tokenSlice.actions;
 export const { setUser, clearUser } = userSlice.actions;
+export const { setMessage, clearMessage } = errorMessageSlice.actions;
 
 const reducer = combineReducers({
   token: tokenReducer,
   user: userReducer,
+  errorMessage: errorMessageReducer,
 });
 
 const store = configureStore({ reducer });
