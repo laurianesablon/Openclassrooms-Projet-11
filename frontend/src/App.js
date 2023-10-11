@@ -1,5 +1,6 @@
 import Home from "./pages/home";
 import Connexion from "./pages/connexion";
+import SignUp from "./pages/signup";
 import User from "./pages/user";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./assets/styles/main.css";
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Connexion />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route element={<PrivateRoutes />}>
             <Route path={"/profile"} element={<User />} />
           </Route>

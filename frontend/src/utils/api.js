@@ -39,6 +39,48 @@ export const fetchLogin = async (
   }
 };
 
+export const fetchSignup = async (
+  firstName,
+  lastName,
+  userName,
+  password,
+  email,
+  navigate,
+  setResponse,
+  message,
+  dispatch
+) => {
+  const url = `${apiURL}/signup`;
+  const requestBody = {
+    email,
+    password,
+    firstName,
+    lastName,
+    userName,
+  };
+  console.log(requestBody);
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    });
+    if (response.ok) {
+      clearErrorMessage(dispatch, message);
+      navigate("/login");
+    } else {
+      setResponse(response);
+      console.log(response);
+      dispatch(setMessage(response.statusText));
+      throw new Error(response.statusText);
+    }
+  } catch (Error) {
+    console.log(Error);
+  }
+};
+
 export const fetchUserData = async (token, dispatch) => {
   try {
     const response = await fetch(apiURL + "/profile", {
@@ -90,11 +132,9 @@ export const changeUsername = async (
     if (response.ok) {
       dispatch(setUser({ firstName, lastName, userName: newUsername, id }));
       clearErrorMessage(dispatch, message);
-
     } else {
       dispatch(setMessage(response.statusText));
       throw new Error(response.statusText);
-
     }
   } catch (error) {
     throw new Error(error);

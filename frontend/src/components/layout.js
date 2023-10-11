@@ -29,10 +29,16 @@ function Header() {
             </Link>
            )}
            {!authenticated && (
+            <>
+             <Link className="main-nav-item" to="/signup">
+             <i className="fa fa-user-circle"></i>
+              Sign Up</Link>
              <Link className="main-nav-item" to="/login">
              <i className="fa fa-user-circle"></i>
              Sign In
            </Link>
+            </>
+           
            )}
         </div>
       </nav>
