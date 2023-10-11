@@ -10,7 +10,7 @@ function Connexion() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [response, setResponse] = useState(""); // Add this line
+  const [response, setResponse] = useState("");
   const message = useSelector((state) => state.errorMessage.message);
   console.log(useSelector((state) => state.errorMessage))
 
@@ -27,10 +27,10 @@ function Connexion() {
           <h1>Sign In</h1>
           <form onSubmit={handleFetchData}>
             <div className="input-wrapper">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="email">Email</label>
               <input
                 type="text"
-                id="username"
+                id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className={
