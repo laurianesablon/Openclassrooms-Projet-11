@@ -1,4 +1,4 @@
-import { clearMessage, setMessage, setToken, setUser } from "../store/store";
+import { setMessage, setToken, setUser } from "../store/store";
 import { apiURL } from "./apiURL";
 import { clearErrorMessage } from "./clearErrorMessage";
 
@@ -58,7 +58,7 @@ export const fetchSignup = async (
     lastName,
     userName,
   };
-  console.log(requestBody);
+
   try {
     const response = await fetch(url, {
       method: "POST",
@@ -72,9 +72,9 @@ export const fetchSignup = async (
       navigate("/login");
     } else {
       setResponse(response);
-      console.log(response);
-      dispatch(setMessage(response.statusText));
-      throw new Error(response.statusText);
+      const responseBody = await response.json();
+      dispatch(setMessage(responseBody.message));
+      throw new Error(responseBody.message);
     }
   } catch (Error) {
     console.log(Error);
