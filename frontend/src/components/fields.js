@@ -1,10 +1,10 @@
-function FormFields({ name, label, value, onChange, className }) {
+function FormFields({ name, label, value, onChange, className, type }) {
   return (
     <div className="input-wrapper">
       <label htmlFor={`${name}-input`}>{label}</label>
       <input
         name={name}
-        type="text"
+        type={type}
         id={`${name}-input`}
         value={value}
         onChange={(e) => onChange(name, e.target.value)}
