@@ -2,13 +2,28 @@ import { Link } from "react-router-dom";
 import logo from "../assets/img/argentBankLogo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { clearToken } from "../store/store";
-
-function Header() {
+function Header({ onlySignIn, onlySignUp }) {
   const authenticated = useSelector((state) => state.token.authenticated);
-  const dispatch = useDispatch()
-  function handleLogout() {
-    dispatch(clearToken())
-  }
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(clearToken());
+  };
+
+  const renderSignInLink = () => (
+    <Link className="main-nav-item" to="/login">
+      <i className="fa fa-user-circle"></i>
+      Sign In
+    </Link>
+  );
+
+  const renderSignUpLink = () => (
+    <Link className="main-nav-item" to="/signup">
+      <i className="fa fa-user-circle"></i>
+      Sign Up
+    </Link>
+  );
+
   return (
     <header>
       <nav className="main-nav">
@@ -21,25 +36,21 @@ function Header() {
           <h1 className="sr-only">Argent Bank</h1>
         </Link>
         <div>
-        {authenticated && (
-            <Link className="main-nav-item" onClick={handleLogout} to="/"> 
-
+          {authenticated ? (
+            <Link className="main-nav-item" onClick={handleLogout} to="/">
               <i className="fa fa-user-circle"></i>
               Log Out
             </Link>
-           )}
-           {!authenticated && (
+          ) : onlySignIn ? (
+            renderSignUpLink()
+          ) : onlySignUp ? (
+            renderSignInLink()
+          ) : (
             <>
-             <Link className="main-nav-item" to="/signup">
-             <i className="fa fa-user-circle"></i>
-              Sign Up</Link>
-             <Link className="main-nav-item" to="/login">
-             <i className="fa fa-user-circle"></i>
-             Sign In
-           </Link>
+              {renderSignUpLink()}
+              {renderSignInLink()}
             </>
-           
-           )}
+          )}
         </div>
       </nav>
     </header>
@@ -54,10 +65,10 @@ function Footer() {
   );
 }
 
-function Layout({ children }) {
+function Layout({ children, onlySignIn = false, onlySignUp = false }) {
   return (
     <>
-      <Header />
+      <Header onlySignIn={onlySignIn} onlySignUp={onlySignUp} />
       {children}
       <Footer />
     </>
