@@ -9,6 +9,91 @@ basePath: /api/v1
 schemes:
   - http
 paths:
+  /accounts/transactions/month:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Last Month Transactions API
+      description: Get last month's account transactions by Account Id
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Login Successfully
+          schema:
+            $ref: '#/definitions/Transactions'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+
+  /accounts/transactions/{transaction_id}:
+    parameters:
+      - in: path
+        name: transaction_id
+        description: Id of the transaction to retrieve
+        required: true
+        type: integer
+        format: int64
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Get Transaction API
+      description: Get account transaction by Transaction Id
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Login Successfully
+          schema:
+            $ref: '#/definitions/TransactionResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Edit Transaction Info
+      description: API for updating a transactions's note or category
+      parameters:
+        - in: body
+          name: body
+          description: Update transaction data
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionEdit'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Data changed successfully
+          schema:
+            $ref: '#/definitions/TransactionAPIResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Delete Transaction Info
+      description: Delete Transaction note or category using the transaction id
+      responses:
+        '204':
+          description: Transaction deleted successfully
+        '404':
+          description: Transaction not found
+        '500':
+          description: Internal Server Error
   /user/login:
     post:
       tags:
@@ -156,3 +241,81 @@ definitions:
     properties:
       userName:
         type: string
+
+  Transactions:  # Moved outside of UserProfile
+    properties:
+      transactions:
+        properties:
+          transactionId:
+            type: integer
+            example: 1
+          date:
+            type: string
+            format: date-time
+          description:
+            type: string
+            example: "Golden Sun Bakery"
+          amount:
+            type: number
+            example: 7.6
+          balance:
+            type: number
+            example: 657.78
+          transactionType:
+            type: string
+            example: "Electronic"
+          category:
+            type: string
+            example: "Food"
+          note:
+            type: string
+            example: ""
+
+  TransactionResponse:
+    type: object
+    properties:
+      transactionId:
+        type: integer
+        example: 1
+      date:
+        type: string
+        format: date-time
+      description:
+        type: string
+        example: "Golden Sun Bakery"
+      amount:
+        type: number
+        example: 7.6
+      balance:
+        type: number
+        example: 657.78
+      transactionType:
+        type: string
+        example: "Electronic"
+      category:
+        type: string
+        example: "Food"
+      note:
+        type: string
+        example: ""
+  TransactionEdit:
+    type: object
+    properties:
+      category:
+        type: string
+      note:
+        type: string
+  TransactionAPIResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        type: object
+        properties:
+          category:
+            type: string
+          note:
+            type: string
