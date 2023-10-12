@@ -40,7 +40,7 @@ function SignUp() {
   };
 
   return (
-    <Layout>
+    <Layout onlySignUp={true}>
       <main className="main bg-dark">
         <section className="sign-in-content">
           <i className="fa fa-user-circle sign-in-icon"></i>
@@ -52,6 +52,7 @@ function SignUp() {
               value={formData.firstName}
               onChange={handleFieldChange}
               className={!response.ok && response ? "shake message_erreur_label" : ""}
+              type="text"
             />
             <FormFields
               name="lastName"
@@ -59,6 +60,7 @@ function SignUp() {
               value={formData.lastName}
               onChange={handleFieldChange}
               className={!response.ok && response ? "shake message_erreur_label" : ""}
+              type="text"
 
             />
             <FormFields
@@ -67,6 +69,7 @@ function SignUp() {
               value={formData.userName}
               onChange={handleFieldChange}
               className={!response.ok && response ? "shake message_erreur_label" : ""}
+              type="text"
 
             />
             <FormFields
@@ -75,6 +78,7 @@ function SignUp() {
               value={formData.email}
               onChange={handleFieldChange}
               className={!response.ok && response ? "shake message_erreur_label" : ""}
+              type="text"
 
             />
             <FormFields
@@ -83,7 +87,7 @@ function SignUp() {
               value={formData.password}
               onChange={handleFieldChange}
               className={!response.ok && response ? "shake message_erreur_label" : ""}
-
+              type="password"
             />
             {!response?.ok && response && (
               <div className="message_erreur">
