@@ -35,7 +35,7 @@ export const fetchLogin = async (
       throw new Error(responseData.message);
     }
   } catch (Error) {
-    console.log(Error);
+    dispatch(setMessage(Error.message))
   }
 };
 
@@ -130,6 +130,7 @@ export const changeUsername = async (
     });
 
     if (response.ok) {
+      console.log(response);
       dispatch(setUser({ firstName, lastName, userName: newUsername, id }));
       clearErrorMessage(dispatch, message);
     } else {
