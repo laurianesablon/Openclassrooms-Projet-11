@@ -13,7 +13,6 @@ function User() {
   const userName = user.userName;
   const [toggle, setToggle] = useState(false);
   const message = useSelector((state) => state.errorMessage.message);
-  // console.log(message);
 
   const handleChangedUserName = (newUsername) => {
     changeUsername(
