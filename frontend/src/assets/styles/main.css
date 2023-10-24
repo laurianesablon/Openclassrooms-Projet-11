@@ -314,7 +314,7 @@ button.cancel {
 .transactions_table_title {
   display: flex;
   width: 80%;
-  justify-content: center;
+  justify-content: space-between;
   gap: 15%;
   margin: 0 auto;
   color: white;
@@ -322,10 +322,17 @@ button.cancel {
 
 }
 
+.transactions_table_title p {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+}
+
+
 .transactions_table {
   display: flex;
   background-color: #00bc77;
-  justify-content: center;
+  justify-content: space-between;
   align-items: top;
   border-radius: 8px;
   color: white;
@@ -334,6 +341,15 @@ button.cancel {
   margin: 10px auto;
   position: relative;
   text-align: start;
+}
+
+.transactions_table .c1,
+.transactions_table .c2,
+.transactions_table .c3,
+.transactions_table .c4 {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
 }
 
 .fa-chevron-down {
