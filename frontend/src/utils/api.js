@@ -77,6 +77,7 @@ export const fetchSignup = async (
       throw new Error(responseBody.message);
     }
   } catch (Error) {
+    dispatch(setMessage(Error.message));
     console.log(Error);
   }
 };
@@ -105,6 +106,7 @@ export const fetchUserData = async (token, dispatch) => {
       }
     }
   } catch (Error) {
+    dispatch(setMessage(Error.message));
     console.log(Error);
   }
 };
@@ -130,14 +132,14 @@ export const changeUsername = async (
     });
 
     if (response.ok) {
-      console.log(response);
       dispatch(setUser({ firstName, lastName, userName: newUsername, id }));
       clearErrorMessage(dispatch, message);
     } else {
       dispatch(setMessage(response.statusText));
       throw new Error(response.statusText);
     }
-  } catch (error) {
-    throw new Error(error);
+  } catch (Error) {
+    dispatch(setMessage(Error.message));
+    console.log(Error);
   }
 };
