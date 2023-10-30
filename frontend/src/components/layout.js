@@ -5,21 +5,19 @@ import { clearToken } from "../store/store";
 function Header({ onlySignIn, onlySignUp }) {
   const authenticated = useSelector((state) => state.token.authenticated);
   const dispatch = useDispatch();
-
+  const userName = useSelector((state) => state.user.userName);
   const handleLogout = () => {
     dispatch(clearToken());
   };
 
   const renderSignInLink = () => (
     <Link className="main-nav-item" to="/login">
-      <i className="fa fa-user-circle"></i>
       Sign In
     </Link>
   );
 
   const renderSignUpLink = () => (
     <Link className="main-nav-item" to="/signup">
-      <i className="fa fa-user-circle"></i>
       Sign Up
     </Link>
   );
@@ -35,10 +33,18 @@ function Header({ onlySignIn, onlySignUp }) {
           />
           <h1 className="sr-only">Argent Bank</h1>
         </Link>
+        {authenticated && (
+          <div className="header-username-container">
+          <i className="fa fa-user-circle header-username"></i>
+          <p className="header-username">{userName}</p>
+        </div>
+        )}
+        
+
         <div>
           {authenticated ? (
+            
             <Link className="main-nav-item" onClick={handleLogout} to="/">
-              <i className="fa fa-user-circle"></i>
               Log Out
             </Link>
           ) : onlySignIn ? (
