@@ -120,6 +120,7 @@ export const changeUsername = async (
   id,
   message
 ) => {
+  const userName = newUsername;
   try {
     const response = await fetch(`${apiURL}/profile`, {
       method: "PUT",
@@ -128,11 +129,10 @@ export const changeUsername = async (
         accept: "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ newUsername }),
+      body: JSON.stringify({ userName }),
     });
-
     if (response.ok) {
-      dispatch(setUser({ firstName, lastName, userName: newUsername, id }));
+      dispatch(setUser({ firstName, lastName, userName: userName, id }));
       clearErrorMessage(dispatch, message);
     } else {
       dispatch(setMessage(response.statusText));
