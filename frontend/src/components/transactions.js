@@ -28,8 +28,8 @@ export default function Transactions({
         {toggle &&
         <>
           <p>{transactionType}</p>
-          <p>{category} <i class="fa-solid fa-pencil"></i></p>
-          <p>{note} <i class="fa-solid fa-pencil"></i></p>
+          <p>{category} <i className="fa-solid fa-pencil"></i></p>
+          <p>{note} <i className="fa-solid fa-pencil"></i></p>
         </>
         }
         
