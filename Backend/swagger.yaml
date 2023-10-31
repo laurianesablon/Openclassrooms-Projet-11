@@ -9,11 +9,17 @@ basePath: /api/v1
 schemes:
   - http
 paths:
-  /user/{user_id}/accounts/transactions:
+  /user/{user_id}/accounts/transactions/{month}:
     parameters:
       - in: path
         name: user_id
         description: Id of the user to retrieve transaction data from
+        required: true
+        type: integer
+        format: int64
+      - in: path
+        name: month
+        description: Number of the month of the year to retrieve the data from
         required: true
         type: integer
         format: int64
@@ -35,17 +41,11 @@ paths:
           description: Invalid Fields
         "500":
           description: Internal Server Error
-  /user/{user_id}/transaction/{transaction_id}:
+  /user/transaction/{transaction_id}:
     parameters:
       - in: path
         name: transaction_id
         description: Id of the transaction to retrieve
-        required: true
-        type: integer
-        format: int64
-      - in: path
-        name: user_id
-        description: Id of the user to retrieve data from
         required: true
         type: integer
         format: int64
@@ -239,68 +239,75 @@ definitions:
     properties:
       userName:
         type: string
-
   LastMonthTransactionResponse:
     type: object
     properties:
-      account1:
+      accounts:
         type: array
         items:
           type: object
           properties:
-            transactionId:
-              type: integer
-              example: 1
-            date:
-              type: string
-              format: date-time
-            description:
-              type: string
-              example: "Golden Sun Bakery"
-            amount:
-              type: number
-              example: 7.6
-            balance:
-              type: number
-              example: 657.78
-            transactionType:
-              type: string
-              example: "Electronic"
-            category:
-              type: string
-              example: "Food"
-            note:
-              type: string
-              example: ""
-      account2:
-        type: array
-        items:
-          type: object
-          properties:
-            transactionId:
-              type: integer
-              example: 1
-            date:
-              type: string
-              format: date-time
-            description:
-              type: string
-              example: "Golden Sun Bakery"
-            amount:
-              type: number
-              example: 7.6
-            balance:
-              type: number
-              example: 657.78
-            transactionType:
-              type: string
-              example: "Electronic"
-            category:
-              type: string
-              example: "Food"
-            note:
-              type: string
-              example: ""
+            account1:
+              type: array
+              items:
+                type: object
+                properties:
+                  transactionId:
+                    type: integer
+                    example: 1
+                  date:
+                    type: string
+                    format: date-time
+                  description:
+                    type: string
+                    example: "Golden Sun Bakery"
+                  amount:
+                    type: number
+                    example: 7.6
+                  balance:
+                    type: number
+                    example: 657.78
+                  transactionType:
+                    type: string
+                    example: "Electronic"
+                  category:
+                    type: string
+                    example: "Food"
+                  note:
+                    type: string
+                    example: ""
+            account2:
+              type: array
+              items:
+                type: object
+                properties:
+                  transactionId:
+                    type: integer
+                    example: 1
+                  date:
+                    type: string
+                    format: date-time
+                  description:
+                    type: string
+                    example: "Golden Sun Bakery"
+                  amount:
+                    type: number
+                    example: 7.6
+                  balance:
+                    type: number
+                    example: 657.78
+                  transactionType:
+                    type: string
+                    example: "Electronic"
+                  category:
+                    type: string
+                    example: "Food"
+                  note:
+                    type: string
+                    example: ""
+         
+            
+
 
   SingleTransactionResponse:
     type: object
